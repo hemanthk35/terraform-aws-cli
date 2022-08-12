@@ -14,14 +14,12 @@ RUN apt-get install --no-install-recommends -y ca-certificates=20210119
 RUN apt-get install --no-install-recommends -y unzip=6.0-26
 RUN apt-get install --no-install-recommends -y gnupg=2.2.27-2+deb11u2
 WORKDIR /workspace
-RUN curl --silent --show-error --fail --remote-name https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS
 RUN curl --silent --show-error --fail --remote-name https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-RUN curl --silent --show-error --fail --remote-name https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig
-COPY hashicorp.asc hashicorp.asc
+COPY security/hashicorp.asc ./
+COPY security/terraform_${TERRAFORM_VERSION}** ./
 RUN gpg --import hashicorp.asc
 RUN gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN grep terraform_${TERRAFORM_VERSION}_linux_amd64.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS | sha256sum -c -
+RUN sha256sum --check --strict --ignore-missing terraform_${TERRAFORM_VERSION}_SHA256SUMS
 RUN unzip -j terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Install AWS CLI using PIP
