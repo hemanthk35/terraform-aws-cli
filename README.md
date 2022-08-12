@@ -83,28 +83,9 @@ TERRAFORM_VERSION=0.14.0
 ## 🙏 Contributions
 Do not hesitate to contribute by [filling an issue](https://github.com/Zenika/terraform-aws-cli/issues) or [a PR](https://github.com/Zenika/terraform-aws-cli/pulls) !
 
-## ⬆️ Dependencies upgrades checklist
+## 📚 Documentations
 
-* Supported versions:
-  * check available **AWS CLI** version on the [project release page](https://github.com/aws/aws-cli/releases)
-  * check available **Terraform CLI** version (keep all minor versions from 0.11) available on the [project release page](https://github.com/hashicorp/terraform/releases)
-* Dockerfile:
-  * check **base image** version on DockerHub
-  * check OS package versions on Debian package repository
-    * Available **Git** versions on the [Debian Packages repository](https://packages.debian.org/search?suite=bullseye&arch=any&searchon=names&keywords=git)
-    * Available **Python** versions on the [Debian packages repository](https://packages.debian.org/search?suite=bullseye&arch=any&searchon=names&keywords=python3)
-    * Available **JQ** versions on the [Debian Packages repository](https://packages.debian.org/search?suite=bullseye&arch=any&searchon=names&keywords=jq)
-    * same process for all other packages
-  * check **Pip** package versions on [pypi](https://pypi.org/)
-* Github actions:
-  * check [runner version](https://github.com/actions/virtual-environments#available-environments)
-  * check **each action release** versions
-* Build scripts:
-  * check **container tags**:
-    * [Hadolint releases](https://github.com/hadolint/hadolint/releases)
-    * [Container-structure-test](https://github.com/GoogleContainerTools/container-structure-test/releases)
-* Readme:
-  * update version in code exemples
+* [⬆️ Dependencies upgrades checklist](https://github.com/zenika-open-source/terraform-aws-cli/tree/master/docs/dependencies-upgrades.md)
 
 ## 🚩 Similar repositories
 
