@@ -3,8 +3,9 @@
  Supported versions:
   * check available **AWS CLI** version on the [project release page](https://github.com/aws/aws-cli/releases)
   * check available **Terraform CLI** version (keep all minor versions from 0.11) available on the [project release page](https://github.com/hashicorp/terraform/releases)
+    * [Report to the doc](https://github.com/zenika-open-source/terraform-aws-cli/tree/master/docs/terraform-binaries-verifications.md) to add required security files when adding a new supported Terraform version
 * Dockerfile:
-  * default arguments versions: should match latest version from supported version file
+  * default argument versions should match latest versions from supported version file
   * check **base image** version [on DockerHub](https://hub.docker.com/_/debian?tab=tags&page=1&name=bullseye)
   * check OS package versions on Debian package repository
     * Available **Git** versions on the [Debian Packages repository](https://packages.debian.org/search?suite=bullseye&arch=any&searchon=names&keywords=git)

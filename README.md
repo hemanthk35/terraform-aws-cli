@@ -85,7 +85,8 @@ Do not hesitate to contribute by [filling an issue](https://github.com/Zenika/te
 
 ## 📚 Documentations
 
-* [⬆️ Dependencies upgrades checklist](https://github.com/zenika-open-source/terraform-aws-cli/tree/master/docs/dependencies-upgrades.md)
+* [Dependencies upgrades checklist](https://github.com/zenika-open-source/terraform-aws-cli/tree/master/docs/dependencies-upgrades.md)
+* [Terraform binaries verifications](https://github.com/zenika-open-source/terraform-aws-cli/tree/master/docs/terraform-binaries-verifications.md)
 
 ## 🚩 Similar repositories
 
