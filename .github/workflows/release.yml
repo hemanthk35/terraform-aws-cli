@@ -44,10 +44,10 @@ jobs:
         run: echo "RELEASE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Build and save the image release tag
-        run: echo "IMAGE_TAG=release-${RELEASE_TAG}_terraform-${{ matrix.tf_version }}_awscli-${{ matrix.awscli_version }}" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=release-${RELEASE_TAG}_terraform-${{ matrix.tf_versions }}_awscli-${{ matrix.awscli_versions }}" >> $GITHUB_ENV
 
       - name: Build image
-        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_version }} --build-arg AWS_CLI_VERSION=${{ matrix.awscli_version }} --tag ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_TAG}
+        run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${{ matrix.tf_versions }} --build-arg AWS_CLI_VERSION=${{ matrix.awscli_versions }} --tag ${ORGANIZATION}/${IMAGE_NAME}:${IMAGE_TAG}
 
       - name: Login to Docker Hub registry
         run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin

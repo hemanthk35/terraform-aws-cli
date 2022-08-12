@@ -30,8 +30,8 @@ jobs:
 
       - name: Retrieve latest suported versions
         run: |
-          echo "AWS_VERSION=$(jq -r '.awscli_version | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
-          echo "TF_VERSION=$(jq -r '.tf_version | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
+          echo "AWS_VERSION=$(jq -r '.awscli_versions | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
+          echo "TF_VERSION=$(jq -r '.tf_versions | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
 
       - name: Build image
         run: docker image build . --file Dockerfile --build-arg TERRAFORM_VERSION=${TF_VERSION} --build-arg AWS_CLI_VERSION=${AWS_VERSION} --tag $ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
