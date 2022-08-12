@@ -54,12 +54,5 @@ jobs:
           build-args: |
             TERRAFORM_VERSION=${{ env.TF_VERSION }}
             AWS_CLI_VERSION=${{ env.AWS_VERSION }}
-          tags: ${{ env.ORGANISATION }}/${{ env.IMAGE_NAME }}:{{ env.IMAGE_TAG }}
+          tags: ${{ env.ORGANIZATION }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: true
-          outputs: type=docker,dest=${{ env.IMAGE_NAME }}_{{ env.IMAGE_TAG }}.tar
-
-      - name: Upload image artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}
-          path: ${{ env.IMAGE_NAME }}-${{ env.IMAGE_TAG }}.tar
