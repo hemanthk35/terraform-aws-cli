@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.platforms }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
       - name: Check out the repo
@@ -35,14 +35,14 @@ jobs:
           PLATFORMS="${PLATFORMS//'%'/%25}"
           PLATFORMS="${PLATFORMS//$'\n'/%0A}"
           PLATFORMS="${PLATFORMS//$'\r'/%0D}"
-          echo "::set-output name=platforms::${PLATFORMS}"
+          echo "::set-output name=matrix::${PLATFORMS}"
 
   build_push_latest:
     runs-on: ubuntu-22.04
     needs: load_supported_platforms
 
     strategy:
-      matrix: ${{ fromJSON(needs.load_supported_platforms.outputs.platforms) }}
+      matrix: ${{ fromJSON(needs.load_supported_platforms.outputs.matrix) }}
 
     steps:
       - name: Check out the repo
