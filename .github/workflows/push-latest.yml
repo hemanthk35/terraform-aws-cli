@@ -48,7 +48,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: ${{ steps.buildx.outputs.platforms }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/386,linux/mips64le,linux/ppc64le,linux/s390x
           build-args: |
             TERRAFORM_VERSION=${{ env.TF_VERSION }}
             AWS_CLI_VERSION=${{ env.AWS_VERSION }}
