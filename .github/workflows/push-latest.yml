@@ -8,13 +8,14 @@ on:
       - "master"
       - "**"
     paths:
-      - "Dockerfile"
-      - "supported_versions.json"
-      - "hashicorp.asc"
-      - "tests/**"
       - ".dockerignore"
-      - "hadolint.yaml"
       - ".github/workflows/push-latest.yml"
+      - "Dockerfile"
+      - "hadolint.yaml"
+      - "hashicorp.asc"
+      - "supported_versions.json"
+      - "supported_platforms.json"
+      - "tests/**"
 
 jobs:
   load_supported_platforms:
