@@ -38,6 +38,7 @@ jobs:
 
   build_push_latest:
     runs-on: ubuntu-22.04
+    needs: load_supported_platforms
 
     strategy:
       matrix: ${{ fromJSON(needs.load_supported_platforms.outputs.platforms) }}
