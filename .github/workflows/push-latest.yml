@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - "master"
-      - "**" # DELETE THIS LINE
     paths:
       - ".dockerignore"
       - ".github/workflows/push-latest.yml"
