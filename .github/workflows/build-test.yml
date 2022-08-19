@@ -74,7 +74,7 @@ jobs:
             AWS_CLI_VERSION=${{ matrix.awscli_versions }}
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: false
-          outputs: type=docker,dest=${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
+          outputs: type=tar,dest=${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v3
