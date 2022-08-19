@@ -5,8 +5,8 @@ name: push-latest
 on:
   push:
     branches:
-      - "**" # DELETE ME
       - "master"
+      - "**"
     paths:
       - "Dockerfile"
       - "supported_versions.json"
@@ -34,14 +34,17 @@ jobs:
           echo "TF_VERSION=$(jq -r '.tf_versions | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
           echo "AWS_VERSION=$(jq -r '.awscli_versions | sort | .[-1]' supported_versions.json)" >> $GITHUB_ENV
 
+      - name: Login to Docker Hub registry
+        run: echo '${{ secrets.DOCKERHUB_PAT }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Login to Docker Hub registry
-        run: echo '${{ secrets.DOCKERHUB_PAT }}' | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Avaiblable platforms
+        run: echo ${{ steps.buildx.outputs.platforms }}
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
