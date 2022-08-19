@@ -4,9 +4,6 @@ name: release
 on:
   release:
     types: [published]
-  push: # DELETE THIS BLOCK BEFORE MERGE !!!
-    branches:
-      - "**"
 
 jobs:
   load_supported_versions:
@@ -64,4 +61,4 @@ jobs:
             TERRAFORM_VERSION=${{ matrix.tf_versions }}
             AWS_CLI_VERSION=${{ matrix.awscli_versions }}
           tags: zenika/terraform-aws-cli:release-${{ env.RELEASE_TAG }}_terraform-${{ matrix.tf_versions }}_awscli-${{ matrix.awscli_versions }}
-          push: false # SET TO TRUE BEFORE MERGE !!!!
+          push: true
