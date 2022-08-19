@@ -16,14 +16,31 @@ on:
       - "hadolint.yaml"
       - ".github/workflows/push-latest.yml"
 
-env:
-  ORGANIZATION: "zenika"
-  IMAGE_NAME: "terraform-aws-cli"
-  IMAGE_TAG: "latest"
-
 jobs:
+  load_supported_platforms:
+    runs-on: ubuntu-22.04
+
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.platforms }}
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Save supported platforms as output
+        id: set-matrix
+        run: |
+          PLATFORMS=$(cat ./supported_platforms.json)
+          PLATFORMS="${PLATFORMS//'%'/%25}"
+          PLATFORMS="${PLATFORMS//$'\n'/%0A}"
+          PLATFORMS="${PLATFORMS//$'\r'/%0D}"
+          echo "::set-output name=platforms::${PLATFORMS}"
+
   build_push_latest:
     runs-on: ubuntu-22.04
+
+    strategy:
+      matrix: ${{ fromJSON(needs.load_supported_platforms.outputs.platforms) }}
 
     steps:
       - name: Check out the repo
@@ -48,9 +65,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/386,linux/mips64le,linux/ppc64le,linux/s390x
+          platforms: ${{ matrix.platforms}}
           build-args: |
             TERRAFORM_VERSION=${{ env.TF_VERSION }}
             AWS_CLI_VERSION=${{ env.AWS_VERSION }}
-          tags: ${{ env.ORGANIZATION }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          tags: zenika/terraform-aws-cli:latest
           push: true
