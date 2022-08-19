@@ -42,7 +42,7 @@ jobs:
           SUPPORTED_VERSIONS="${SUPPORTED_VERSIONS//$'\r'/%0D}"
           echo "::set-output name=matrix::${SUPPORTED_VERSIONS}"
 
-  build:
+  build-test:
     runs-on: ubuntu-22.04
     needs: load_supported_versions
     strategy:
@@ -61,10 +61,10 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
-      - name: Set up Docker Buildx
+      - name: Set up Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build and push Docker images
+      - name: Build container images
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -75,38 +75,6 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: false
           outputs: type=tar,dest=${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
-
-      - name: Upload image artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}
-          path: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
-
-  test:
-    runs-on: ubuntu-22.04
-    needs:
-      - build
-      - load_supported_versions
-    strategy:
-      matrix: ${{ fromJSON(needs.load_supported_versions.outputs.matrix) }}
-
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-
-      - name: Save branch name as env var
-        run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
-      - name: Build and save image tag
-        run: echo "IMAGE_TAG=${BRANCH}_terraform-${{ matrix.tf_versions }}_awscli-${{ matrix.awscli_versions }}" >> $GITHUB_ENV
-
-      - name: Download image artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}
-
-      - name: Load image
-        run: docker image load --input ${{ env.IMAGE_NAME }}_${{ env.IMAGE_TAG }}.tar
 
       - name: Generate test config
         run: |
