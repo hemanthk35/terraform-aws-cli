@@ -75,6 +75,8 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: false
           load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Generate test config
         run: |
@@ -98,3 +100,5 @@ jobs:
             AWS_CLI_VERSION=${{ matrix.awscli_versions }}
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
