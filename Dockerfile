@@ -4,6 +4,15 @@ ARG TERRAFORM_VERSION
 ARG PYTHON_MAJOR_VERSION=3.9
 ARG DEBIAN_VERSION=bullseye-20210902-slim
 
+# Download Docker
+FROM debian:${DEBIAN_VERSION} as docker
+ARG Docker_Cli
+RUN /bin/sh -c apt-get update
+RUN /bin/sh -c apt-get install -y openjdk-8-jdk
+RUN /bin/sh -c apt-get install -y maven
+RUN /bin/sh -c apt-get install -y git
+RUN /bin/sh -c apt-get install -y wget
+
 # Download Terraform binary
 FROM debian:${DEBIAN_VERSION} as terraform
 ARG TERRAFORM_VERSION
